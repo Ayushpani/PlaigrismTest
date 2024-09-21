@@ -4,16 +4,13 @@ import fitz  # PyMuPDF
 import io
 from PyPDF2 import PdfReader
 import plotly.graph_objects as go
+import os
 
 # Load spaCy model
-@st.cache_resource
 def load_spacy_model():
-    try:
-        return spacy.load("en_core_web_sm")
-    except:
-        spacy.cli.download("en_core_web_sm")
-        return spacy.load("en_core_web_sm")
-
+    if not os.path.exists("en_core_web_sm"):
+        os.system('python -m spacy download en_core_web_sm')
+    return spacy.load("en_core_web_sm")
 nlp = load_spacy_model()
 
 def extract_text_from_pdf(pdf_file):
