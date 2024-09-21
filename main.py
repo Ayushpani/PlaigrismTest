@@ -8,7 +8,11 @@ import plotly.graph_objects as go
 # Load spaCy model
 @st.cache_resource
 def load_spacy_model():
-    return spacy.load("en_core_web_sm")
+    try:
+        return spacy.load("en_core_web_sm")
+    except:
+        spacy.cli.download("en_core_web_sm")
+        return spacy.load("en_core_web_sm")
 
 nlp = load_spacy_model()
 
